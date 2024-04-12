@@ -47,6 +47,21 @@ body{
     transition: background-color 0.3s ease; /* 设置背景色变化动画效果 */
 }
 
+.start_answer {
+    margin-top: 20px;
+    padding: 10px 20px; /* 设置按钮内边距 */
+    font-size: 16px; /* 设置按钮文字大小 */
+    background-color: #007bff; /* 设置按钮背景色 */
+    color: #fff; /* 设置按钮文字颜色 */
+    border: none; /* 移除按钮边框 */
+    border-radius: 5px; /* 设置按钮圆角 */
+    cursor: pointer; /* 设置鼠标样式为手型 */
+    transition: background-color 0.3s ease; /* 设置背景色变化动画效果 */
+    text-decoration: none; /* 移除超链接下划线 */
+}
+.start_answer:hover {
+    background-color: #0056b3; /* 设置按钮鼠标悬停时的背景色 */
+}
 .box button a {
     text-decoration: none; /* 移除超链接下划线 */
     color: inherit; /* 继承父元素（按钮）的文字颜色 */

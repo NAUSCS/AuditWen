@@ -25,7 +25,7 @@ def login():
     # 在这里你可以根据需要进行验证，比如验证用户名密码是否正确
     # 这里简单地将数据打印出来
     print("Login Form Data:", username, password)
-    conn = pymssql.connect(host='localhost', user='sa', password='123456', database='try1', )  # 连接数据库
+    conn = pymssql.connect(host='localhost', user='sa', password='123456', database='AuditWen', )  # 连接数据库
     db = conn.cursor()  # 获取游标
     sql = '''SELECT * FROM Users'''
     df = pd.read_sql(sql, conn)
@@ -54,8 +54,7 @@ def register():
 
     # 返回响应，你可以根据需要返回不同的响应，比如注册成功或失败
 
-    conn = pymssql.connect(host='localhost', user='sa', password='123456', database='try1')  # 连接数据库
-    # conn=pymssql.connect(host='WIN-AJJR812101G',user='sa',password='123456',database='ADEXP1-3')#连接数据库
+    conn = pymssql.connect(host='localhost', user='sa', password='123456', database='AuditWen')  # 连接数据库
     db = conn.cursor()  # 获取游标
     sql1 = '''create table Users(
                 UserID INT PRIMARY KEY,

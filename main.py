@@ -23,7 +23,7 @@ def start_web_server(port):
 
 def start_user_page():
     """
-    启动用户页面
+    启动SQL、用户页面
     """
     subprocess.call(["python", "./src/user.py"])
 

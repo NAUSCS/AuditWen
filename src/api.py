@@ -149,7 +149,7 @@ import datetime
 
 # 连接数据库
 server = 'localhost'
-database = 'try1'
+database = 'AuditWen'
 username = 'sa'
 password = '123456'
 conn = pyodbc.connect(
