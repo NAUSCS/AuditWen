@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登陆界面</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdn.staticfile.org/vue/2.6.9/vue.js"></script>
+</head>
+<body>
+  <div id="app" class="container">
+    <img src="../css/bc.jpg" alt="">
+    <div class="panel">
+      <div class="content login">
+        <div class="switch">
+          <span :class='{"active":active === "login"}' @click="go('login')">登陆</span>
+          <span>/</span>
+          <span :class='{"active":active === "register"}' @click="go('register')">注册</span>
+        </div>
+        <div class="form" id="fromLogin">
+          <form action="/register" method="post">
+            <!-- 注册表单内容 -->
+            <template v-if="active === 'register'" >
+              <div class="input">
+                <input :class="{hasValue : registerForm.email}" v-model="registerForm.email" type="text" name="email" id="email">
+                <label for="email">邮箱</label>
+              </div>
+              <div class="input">
+                <input :class="{hasValue : registerForm.Username}" v-model="registerForm.Username" type="text" name="Username" id="Username">
+                <label for="email">用户名</label>
+              </div>
+              <div class="input">
+                <input :class="{hasValue : registerForm.Password}" v-model="registerForm.Password" type="text" name="Password" id="Password">
+                <label for="email">密码</label>
+              </div>
+              <div class="input">
+                <input :class="{hasValue : registerForm.repeat}" v-model="registerForm.repeat" type="text" name="Passwordrepeat" id="Passwordrepeat">
+                <label for="email">重复密码</label>
+                <button type="submit" @click="submit">注册</button>
+              </div>
+            </template>
+          </form>
+
+          <!-- 如果按钮选择的是登陆就展示这个界面的内容 -->
+          <form action="/login" method="post">
+            <template v-if="active === 'login'" >
+
+              <div class="input">
+                <input :class="{hasValue : loginForm.Username}" v-model="loginForm.Username" type="text" name="Username" id="Username">
+                <label for="email">用户名</label>
+              </div>
+              <div class="input">
+                <input :class="{hasValue : loginForm.Password}" v-model="loginForm.Password" type="text" name="Password" id="Password">
+                <label for="email">密码</label>
+                <button type="submit" @click="submit">登陆</button>
+              </div>
+            </template>
+          </form>
+
+          <span>忘记密码？</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+  var vue = new Vue({
+    el: '#app',
+    data: {
+      active :'login',
+      registerForm:{
+        email : '',
+        Username : '',
+        Password  : '',
+        repeat : ''
+      },
+      loginForm:{
+        Username : '',
+        Password : ''
+      }
+    },
+    methods: {
+      go(type){
+        this.active = type;
+      },
+      submit(){
+        if(this.active === 'login'){
+          console.log('login',this.loginForm)
+        }
+        if(this.active === 'register'){
+          console.log('register',this.registerForm)
+        }
+      }
+    }
+  })
+</script>
+</html>

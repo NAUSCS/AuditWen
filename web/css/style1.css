@@ -1,0 +1,82 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: url(bg.jpg) no-repeat;
+    background-size: cover;
+}
+
+.box{
+    width: 450px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 40px;
+    text-align: center;
+    margin: auto;
+    margin-top: 5%;
+    color: white;
+    font-family: 'Century Gothic',sans-serif;
+}
+
+.box-img{
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.box h1{
+    font-size: 40px;
+    letter-spacing: 4px;
+    font-weight: 100;
+}
+
+.box h5{
+    font-size: 20px;
+    letter-spacing: 3px;
+    font-weight: 100;
+}
+
+.box button{
+    width: 50%;
+    height: 100%;
+    padding: 10px 20px; /* 设置按钮内边距 */
+    font-size: 16px; /* 设置按钮文字大小 */
+    background-color: #007bff; /* 设置按钮背景色 */
+    color: #fff; /* 设置按钮文字颜色 */
+    border: none; /* 移除按钮边框 */
+    border-radius: 5px; /* 设置按钮圆角 */
+    cursor: pointer; /* 设置鼠标样式为手型 */
+    transition: background-color 0.3s ease; /* 设置背景色变化动画效果 */
+}
+
+.box button a {
+    text-decoration: none; /* 移除超链接下划线 */
+    color: inherit; /* 继承父元素（按钮）的文字颜色 */
+}
+
+.box button:hover {
+    background-color: #0056b3; /* 设置按钮鼠标悬停时的背景色 */
+}
+
+.box p{
+    text-align: justify;
+}
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+.box li{
+    display: inline-block;
+    margin: 6px;
+    list-style: none;
+}
+
+.box li a{
+    color: white;
+    text-decoration: none;
+    font-size: 60px;
+    transition: all ease-in-out 250ms;
+}
+
+.box li a:hover{
+    color: #b9b9b9;
+}
