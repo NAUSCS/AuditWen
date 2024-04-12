@@ -93,6 +93,7 @@ body {
     border-radius: 5px; /* 设置按钮圆角 */
     cursor: pointer; /* 设置鼠标样式为手型 */
     transition: background-color 0.3s ease; /* 设置背景色变化动画效果 */
+    text-decoration: none; /* 移除超链接下划线 */
 }
 .user-center-button:hover {
     background-color: #0056b3; /* 设置按钮鼠标悬停时的背景色 */

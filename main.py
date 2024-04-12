@@ -13,9 +13,6 @@ cpu_only = False  # 是否只使用 CPU
 web_server = True  # 是否使用 Web 服务器
 port_number = 8000  # Web 服务器的端口号
 
-# SQL 数据库配置
-sql = True  # 是否使用 SQL 数据库
-
 
 def start_web_server(port):
     """
@@ -28,14 +25,7 @@ def start_user_page():
     """
     启动用户页面
     """
-    subprocess.call(["python", "./src/app.py"])
-
-
-def start_sql_server():
-    """
-    启动SQL服务器
-    """
-    subprocess.call(["python", "./src/sql_user.py"])
+    subprocess.call(["python", "./src/user.py"])
 
 
 def start_api_server(checkpoint_path, server_port, server_name, cpu_only):
@@ -47,14 +37,12 @@ def start_api_server(checkpoint_path, server_port, server_name, cpu_only):
                          "-c", checkpoint_path,
                          "--server-port", str(server_port),
                          "--server-name", server_name,
-                         "--sql", str(sql),
                          "--cpu-only"])
     else:
         subprocess.call(["python", "./src/api.py",
                          "-c", checkpoint_path,
                          "--server-port", str(server_port),
-                         "--server-name", server_name,
-                         "--sql", str(sql)])
+                         "--server-name", server_name])
 
 
 if __name__ == "__main__":
@@ -70,18 +58,12 @@ if __name__ == "__main__":
         web_process.start()
         processes.append(web_process)
 
-    if sql:
-        # 启动SQL服务器
-        sql_process = multiprocessing.Process(target=start_sql_server)
-        sql_process.start()
-        processes.append(sql_process)
-
     # 启动API服务器
-    api_process = multiprocessing.Process(target=start_api_server, args=(checkpoint_path, server_port, server_name, cpu_only))
+    api_process = multiprocessing.Process(target=start_api_server,
+                                          args=(checkpoint_path, server_port, server_name, cpu_only))
     api_process.start()
     processes.append(api_process)
 
     # 等待所有进程结束
     for process in processes:
         process.join()
-

@@ -86,94 +86,95 @@ function sendMessageToServer(question, answer) {
         role: 'user',
         content: question
     })
-    .then(function (response) {
-        console.log('问题已保存');
-        // 保存回答
-        axios.post('http://localhost:8000/add_message', {
-            role: 'assistant',
-            content: answer
-        })
         .then(function (response) {
-            console.log('回答已保存');
+            console.log('问题已保存');
+            // 保存回答
+            axios.post('http://localhost:8000/add_message', {
+                role: 'assistant',
+                content: answer
+            })
+                .then(function (response) {
+                    console.log('回答已保存');
+                })
+                .catch(function (error) {
+                    console.error('保存回答时出错：', error);
+                });
         })
         .catch(function (error) {
-            console.error('保存回答时出错：', error);
+            console.error('保存问题时出错：', error);
         });
-    })
-    .catch(function (error) {
-        console.error('保存问题时出错：', error);
-    });
 }
 
 function startNewChat() {
     axios.get('http://localhost:8000/latest_group_id')
-    .then(function (response) {
-        var latestGroupID = response.data.latest_group_id;
-
-        // 创建新按钮
-        var newButton = document.createElement('button');
-        newButton.id = latestGroupID+1;
-
-        newButton.textContent =  "新的对话"+newButton.id; // 设置按钮文本内容为最新的 ID
-                // 添加点击事件处理程序
-
-        // 添加点击事件处理程序
-        newButton.onclick = function () {
-
-
-            var groupId = newButton.id; // 获取按钮中的数字
-            sendGroupId(groupId); // 将按钮中的数字发送到后端
-
-            clearChatHistory();
-            // 在前端页面上显示新的问答界面或提示信息
-            displayNewChatMessage("开始新的问答！");
-
-    axios.get('http://localhost:8000/question_answer')
-    .then(function(response){
-        var question_answer = response.data.question_answer;
-        for (var i = 0; i < question_answer.length; i++) {
-            var historyContainer = document.getElementById('historyContainer');
-            var historyItem = document.createElement('p');
-            historyItem.textContent = '问题：' + question_answer[i][0];
-            historyContainer.appendChild(historyItem);
-
-            var answerItem = document.createElement('p');
-            answerItem.innerHTML = '<strong>回答：</strong>' + question_answer[i][1];
-            historyContainer.appendChild(answerItem);
-        }
-    })
-    .catch(function (error) {
-        console.error('请求问题和答案出错：', error);
-    });
-        };
-
-
-        // 向服务器发送请求，告知服务器清除当前问答历史
-        axios.post('http://localhost:8000/new_chat')
         .then(function (response) {
-            // 清除前端页面上的问答历史
-            clearChatHistory();
-            // 在前端页面上显示新的问答界面或提示信息
-            displayNewChatMessage("开始新的问答！");
+            var latestGroupID = response.data.latest_group_id;
+
+            // 创建新按钮
+            var newButton = document.createElement('button');
+            newButton.id = latestGroupID + 1;
+
+            newButton.textContent = "新的对话" + newButton.id; // 设置按钮文本内容为最新的 ID
+            // 添加点击事件处理程序
+
+            // 添加点击事件处理程序
+            newButton.onclick = function () {
+
+
+                var groupId = newButton.id; // 获取按钮中的数字
+                sendGroupId(groupId); // 将按钮中的数字发送到后端
+
+                clearChatHistory();
+                // 在前端页面上显示新的问答界面或提示信息
+                displayNewChatMessage("开始新的问答！");
+
+                axios.get('http://localhost:8000/question_answer')
+                    .then(function (response) {
+                        var question_answer = response.data.question_answer;
+                        for (var i = 0; i < question_answer.length; i++) {
+                            var historyContainer = document.getElementById('historyContainer');
+                            var historyItem = document.createElement('p');
+                            historyItem.textContent = '问题：' + question_answer[i][0];
+                            historyContainer.appendChild(historyItem);
+
+                            var answerItem = document.createElement('p');
+                            answerItem.innerHTML = '<strong>回答：</strong>' + question_answer[i][1];
+                            historyContainer.appendChild(answerItem);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('请求问题和答案出错：', error);
+                    });
+            };
+
+
+            // 向服务器发送请求，告知服务器清除当前问答历史
+            axios.post('http://localhost:8000/new_chat')
+                .then(function (response) {
+                    // 清除前端页面上的问答历史
+                    clearChatHistory();
+                    // 在前端页面上显示新的问答界面或提示信息
+                    displayNewChatMessage("开始新的问答！");
+                })
+                .catch(function (error) {
+                    console.error('请求出错：', error);
+                });
+
+            axios.get('http://localhost:8000/time_now')
+                .then(function (response) {
+                    newButton.textContent = response.data.time_now
+                })
+            // 将新按钮添加到页面上
+            var newButtonContainer = document.getElementById('newContainer');
+            newButtonContainer.appendChild(newButton);
         })
         .catch(function (error) {
             console.error('请求出错：', error);
         });
 
-        axios.get('http://localhost:8000/time_now')
-        .then(function(response){
-        newButton.textContent = response.data.time_now
-        })
-            // 将新按钮添加到页面上
-        var newButtonContainer = document.getElementById('newContainer');
-        newButtonContainer.appendChild(newButton);
-    })
-    .catch(function (error) {
-        console.error('请求出错：', error);
-    });
-
 
 }
+
 function clearChatHistory() {
     // 清除前端页面上的问答历史信息
     var historyContainer = document.getElementById('historyContainer');
@@ -213,7 +214,7 @@ function getCurrentTime() {
 function sendGroupId(groupId) {
     // 将字符串类型的 groupId 转换为整数类型
     var groupIdInt = parseInt(groupId);
-    axios.post('http://localhost:8000/retrieve_content',{content:groupIdInt})
+    axios.post('http://localhost:8000/retrieve_content', {content: groupIdInt})
         .then(function (response) {
             console.log('成功检索内容：', response.data);
             // 这里可以根据返回的内容执行相应的操作，比如显示在页面上
@@ -223,61 +224,61 @@ function sendGroupId(groupId) {
         });
 }
 
-function history_button_show(){
+function history_button_show() {
     axios.get('http://localhost:8000/time_history')
-    .then(function(response){
-    var GroupID_Time=response.data.Group_Time;
-    for(var i=0;i<GroupID_Time.length;i++){
-        // 创建新按钮
-        var newButton1 = document.createElement('button');
-        newButton1.id = GroupID_Time[i][0];
-        a = GroupID_Time[i][2];
-        newButton1.textContent = a; // 设置按钮文本内容为最新的 ID
-        newButton1.classList.add('userButton');
+        .then(function (response) {
+            var GroupID_Time = response.data.Group_Time;
+            for (var i = 0; i < GroupID_Time.length; i++) {
+                // 创建新按钮
+                var newButton1 = document.createElement('button');
+                newButton1.id = GroupID_Time[i][0];
+                a = GroupID_Time[i][2];
+                newButton1.textContent = a; // 设置按钮文本内容为最新的 ID
+                newButton1.classList.add('userButton');
                 // 将新按钮添加到页面上
-        var newButtonContainer = document.getElementById('newContainer');
-        newButtonContainer.appendChild(newButton1);
-    }
-    var buttons = document.querySelectorAll(".userButton");
-    buttons.forEach(function(button) {
-    button.addEventListener("click", function() {
+                var newButtonContainer = document.getElementById('newContainer');
+                newButtonContainer.appendChild(newButton1);
+            }
+            var buttons = document.querySelectorAll(".userButton");
+            buttons.forEach(function (button) {
+                button.addEventListener("click", function () {
 
-        // 获取按钮上存储的用户 ID
-        var userId = this.getAttribute("id");
-        sendGroupId(userId)
+                    // 获取按钮上存储的用户 ID
+                    var userId = this.getAttribute("id");
+                    sendGroupId(userId)
 
                     clearChatHistory();
-            // 在前端页面上显示新的问答界面或提示信息
-            displayNewChatMessage("开始新的问答！");
+                    // 在前端页面上显示新的问答界面或提示信息
+                    displayNewChatMessage("开始新的问答！");
 
-    axios.get('http://localhost:8000/question_answer')
-    .then(function(response){
-        var question_answer = response.data.question_answer;
-        for (var i = 0; i < question_answer.length; i++) {
-            var historyContainer = document.getElementById('historyContainer');
-            var historyItem = document.createElement('p');
-            historyItem.textContent = '问题：' + question_answer[i][0];
-            historyContainer.appendChild(historyItem);
+                    axios.get('http://localhost:8000/question_answer')
+                        .then(function (response) {
+                            var question_answer = response.data.question_answer;
+                            for (var i = 0; i < question_answer.length; i++) {
+                                var historyContainer = document.getElementById('historyContainer');
+                                var historyItem = document.createElement('p');
+                                historyItem.textContent = '问题：' + question_answer[i][0];
+                                historyContainer.appendChild(historyItem);
 
-            var answerItem = document.createElement('p');
-            answerItem.innerHTML = '<strong>回答：</strong>' + question_answer[i][1];
-            historyContainer.appendChild(answerItem);
-        }
-    })
-    .catch(function (error) {
-        console.error('请求问题和答案出错：', error);
-    });
-    })
-    })
-})
+                                var answerItem = document.createElement('p');
+                                answerItem.innerHTML = '<strong>回答：</strong>' + question_answer[i][1];
+                                historyContainer.appendChild(answerItem);
+                            }
+                        })
+                        .catch(function (error) {
+                            console.error('请求问题和答案出错：', error);
+                        });
+                })
+            })
+        })
 }
 
 
 function openAboutPage() {
-    window.open('about.html', '_blank');
+    window.open('./pages/about.html', '_blank');
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     // 在DOM加载完成后执行的代码
     history_button_show();
 });

@@ -87,9 +87,11 @@ class ModelList(BaseModel):
     object: str = 'list'
     data: List[ModelCard] = []
 
+
 class Content(BaseModel):
     content: int
     function_call: Optional[Dict] = None
+
 
 class ChatMessage(BaseModel):
     role: Literal['user', 'assistant', 'system', 'function']
@@ -141,8 +143,6 @@ async def list_models():
     return ModelList(data=[model_card])
 
 
-
-
 # 导入 pyodbc 模块用于与 SQL Server 数据库交互
 import pyodbc
 import datetime
@@ -155,18 +155,19 @@ password = '123456'
 conn = pyodbc.connect(
     'DRIVER={SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
 cursor = conn.cursor()
-sq11="""
+sq11 = """
         select * from QuestionSets
         """
-read_sql = pd.read_sql(sq11,conn)
-try :
+read_sql = pd.read_sql(sq11, conn)
+try:
     set_id = max(read_sql["SetID"])
-except :
+except:
     set_id = 0  # 初始化setID为零
 question_id = 0  # 初始化QuestionID为零
 group_id = 0  # 初始化QuestionGroupID为零
 global groupId
 global time_now
+
 
 @app.post("/add_message")
 async def add_message(message: ChatMessage):
@@ -195,13 +196,14 @@ async def add_message(message: ChatMessage):
             detail=f"Invalid request: Unsupported message role {message.role}.",
         )
 
+
 @app.post("/new_chat")
 async def new_chat():
-    global set_id, question_id, group_id,time_now
+    global set_id, question_id, group_id, time_now
     # set_id += 1
     group_id += 1
     question_id = 0
-    time_now=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     cursor.execute("SELECT COUNT(*) FROM QuestionGroups WHERE GroupID = ?", (group_id,))
     count = cursor.fetchone()[0]
     if count == 0:
@@ -215,9 +217,9 @@ async def new_chat():
 async def retrieve_content(a: Content):
     received_content = a.content
     global groupId
-    groupId=received_content
+    groupId = received_content
     global group_id
-    group_id =received_content
+    group_id = received_content
     print('接收到的 content:', received_content)
     return {"received_content": received_content}
 
@@ -230,7 +232,7 @@ async def time_now():
     return {"time_now": time_now}
 
 
-#生成以最新的group_id的按钮
+# 生成以最新的group_id的按钮
 @app.get("/latest_group_id")
 async def get_latest_group_id():
     global group_id
@@ -241,7 +243,8 @@ async def get_latest_group_id():
         group_id = latest_group_id
     return {"latest_group_id": group_id}
 
-#查询数据库以获得与之匹对的question和answer
+
+# 查询数据库以获得与之匹对的question和answer
 @app.get("/question_answer")
 async def get_question_answer():
     sql2 = """
@@ -255,14 +258,14 @@ async def get_question_answer():
     question_answer = [tuple(record[-2:]) for record in group_1_records.values]
     count2 = len(question_answer)
     global history
-    history=[("你是谁？", "我是一个智能审计问答机器人，可以回答审计相关的问题。")]+question_answer
-    return {"question_answer":question_answer}
+    history = [("你是谁？", "我是一个智能审计问答机器人，可以回答审计相关的问题。")] + question_answer
+    return {"question_answer": question_answer}
 
 
 # 根据点击的按钮名查询数据
 @app.get("/get_data_by_button_name")
 async def get_data_by_button_name(button_name: str):
-    groupId=button_name
+    groupId = button_name
     data_list = []
     # 查询数据库以获取与按钮名字相同的数据
     cursor.execute("SELECT * FROM QuestionSets WHERE ButtonName = ?", (button_name,))
@@ -329,12 +332,13 @@ async def new_chat():
     history.clear()
     return {"message": "新的问答已开始"}
 
+
 @app.get("/time_history")
 async def time_history():
     sql1 = """
             select * from QuestionGroups
             """
-    a=pd.read_sql(sql1,conn)
+    a = pd.read_sql(sql1, conn)
     Group_Time = [tuple(record[:]) for record in a.values]
     b = []
     for i in Group_Time:
@@ -493,7 +497,7 @@ def parse_messages(messages, functions):
     if len(messages) % 2 != 0:
         raise HTTPException(status_code=400, detail='Invalid request')
 
-    return query,system
+    return query, system
 
 
 def parse_response(response):
