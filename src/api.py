@@ -253,6 +253,7 @@ async def get_question_answer():
     read_sql = pd.read_sql(sql2, conn)
     count1 = len(read_sql)
     # 选择 GroupID 为 1 的所有记录
+    global groupId
     group_1_records = read_sql[read_sql['GroupID'] == groupId]
     # 将记录转换为元组并放入列表中
     question_answer = [tuple(record[-2:]) for record in group_1_records.values]

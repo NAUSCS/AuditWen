@@ -42,7 +42,7 @@
 NER）任务中，AuditWen在5次提示的评估中展示出比基准模型更高的实体F1分数，表明基准模型在提供了每个类别五个示例进行推理后，仍然难以准确识别命名实体。此外，审计实体分类的5次提示评估结果显示，尽管没有一个模型可以访问相关的预训练数据集，但AuditWen可以实现比基准模型更高的准确率。这是因为该模型可以将已知结论泛化到其他与审计相关的任务中。在短语分类任务（包括审计实体、审计问题和法律名称分类）中，GPT-4优于AuditWen及其他模型。但AuditWen与Qwen-7B-chat相比，表现出显著改进，并与GPT-4实现了竞争性结果。<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在段落级别和文档任务中，AuditWen在法律建议、其他审计相关问题和风险分析中实现了更高的BERT分数和BART分数。我们认为AuditWen在这些任务中的成功不仅归因于合适的指令模板，还归因于用于任务的微调数据集的规模。<br>
 
-<img src="./img/score1.png" alt="score1" width="80%"/>
+<img src="./img/score.png" alt="score" width="80%"/>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们测算了AuditWen模型生成不同数量token的平均推理速度及峰值显存占用情况。<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具体而言，我们记录在长度为1的上下文的条件下生成不同长度token的性能。评测运行于单张A40-48G
