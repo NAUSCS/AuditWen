@@ -187,7 +187,7 @@ cpu_only = True  # 是否只使用 CPU
 }
 @unpublished{AuditWen,
   title={AuditWen: An Open-Source Large Language Model for Audit},
-  author={Jiajia Huang},
+  author={Jiajia Huang and Haoran Zhu and Chao Xu and Tianming Zhan and Qianqian Xie and Jiming Huang},
   year={2024}
 }
 ```
