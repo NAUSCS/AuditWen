@@ -181,7 +181,7 @@ cpu_only = True  # 是否只使用 CPU
 
 ```
 @misc{AuditWen,
-  title={AuditWen: An Open-Source Large Language Model for Audit},
+  title={AuditWen: An Intelligent Audit Question-Answering System Based on Large Language Models},
   author={Jingxing Zhao and Haotian Yang and Hua Zhang and RuiJie Hu and Hao Li},
   year={2024}
 }
