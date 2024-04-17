@@ -174,7 +174,7 @@ cpu_only = True  # 是否只使用 CPU
 
 ### 问题
 
-如果遇到问题，请考虑参考[FAQ文件](FAQ.md)、[issue区]()以及[Qwen项目](https://github.com/QwenLM/Qwen)
+如果遇到问题，请考虑参考[FAQ文件](FAQ.md)、[issue区](https://github.com/NAUSCS/AuditWen/issues)以及[Qwen项目](https://github.com/QwenLM/Qwen)
 。如仍无法解决，请在issue区详细说明您的问题
 
 ## 引用
@@ -209,7 +209,7 @@ cpu_only = True  # 是否只使用 CPU
 - 模型生成的内容受模型计算、随机性等因素影响，本项目无法对其准确性作出保证。
 - 对于模型输出的任何内容，本项目不承担任何法律责任，亦不对因使用相关资源和输出结果而可能产生的任何损失承担责任。
 
-AuditWen采用[AuditWen LICENSE AGREEMENT](./AuditWen LICENSE AGREEMENT)授权，您可在仓库中找到协议原文。
+AuditWen采用[AuditWen LICENSE AGREEMENT](./AuditWen%20LICENSE%20AGREEMENT)授权，您可在仓库中找到协议原文。
 
 ## 致谢
 
