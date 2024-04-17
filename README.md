@@ -44,6 +44,8 @@ NER）任务中，AuditWen在5次提示的评估中展示出比基准模型更�
 
 <img src="./img/score.png" alt="score" width="80%"/>
 
+
+### 推理速度及显存使用
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们测算了AuditWen模型生成不同数量token的平均推理速度及峰值显存占用情况。<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具体而言，我们记录在长度为1的上下文的条件下生成不同长度token的性能。评测运行于单张A40-48G
 GPU，使用PyTorch 2.1.2和CUDA 12.1。推理速度是生成不同长度token的速度均值。<br>
